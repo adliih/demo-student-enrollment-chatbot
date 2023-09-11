@@ -5,11 +5,16 @@ import { store } from "./app/store"
 import App from "./App"
 import "./index.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import ChatScreen from "./features/chat-bot/ChatScreen"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "chat",
+    element: <ChatScreen />,
   },
 ])
 

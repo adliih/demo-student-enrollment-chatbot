@@ -1,8 +1,8 @@
 import React from "react"
 
-const MessageParser = ({ children, actions }) => {
-  const parse = (message) => {
-    console.log(message)
+const MessageParser = ({ children, actions }: any) => {
+  const parse = (message: string) => {
+    actions.userReplied(message)
   }
 
   return (
