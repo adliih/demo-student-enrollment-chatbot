@@ -1,8 +1,12 @@
-import { createChatBotMessage } from "react-chatbot-kit"
 import IConfig from "react-chatbot-kit/build/src/interfaces/IConfig"
+import Loading from "./Loading"
+import { createCustomMessage } from "react-chatbot-kit"
 
 const config: IConfig = {
-  initialMessages: [createChatBotMessage(`Hello world`, {})],
+  initialMessages: [createCustomMessage("", "loading", {})],
+  customMessages: {
+    loading: (props) => <Loading {...props} />,
+  },
 }
 
 export default config

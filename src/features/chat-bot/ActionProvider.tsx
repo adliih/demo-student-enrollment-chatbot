@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { createChatBotMessage } from "react-chatbot-kit"
 import { botMessages, userMessages } from "./config"
 
@@ -12,6 +12,9 @@ enum FormStep {
 
 type MessageType = ReturnType<typeof createChatBotMessage>
 
+const REPLACE_INITIAL_MESSAGE_DELAY_SEC = 3
+const MILLIS_IN_SEC = 1000
+
 const ActionProvider = ({ setState, children }: any) => {
   const [formStep, setFormStep] = useState(FormStep.INIT)
 
@@ -20,6 +23,15 @@ const ActionProvider = ({ setState, children }: any) => {
       ...prev,
       messages: [...prev.messages, message],
     }))
+  }
+
+  const setMessages = (messages: MessageType[]) => {
+    setState((prev: any) => {
+      return {
+        ...prev,
+        messages,
+      }
+    })
   }
 
   const handleInitResponse = (message: string) => {
@@ -57,6 +69,17 @@ const ActionProvider = ({ setState, children }: any) => {
         return handleAgeEntered(message)
     }
   }
+
+  useEffect(() => {
+    const replaceMessageId = setTimeout(() => {
+      setMessages([createChatBotMessage(botMessages.welcome, {})])
+    }, REPLACE_INITIAL_MESSAGE_DELAY_SEC * MILLIS_IN_SEC)
+
+    return () => {
+      clearTimeout(replaceMessageId)
+    }
+  }, [])
+
   return (
     <div>
       {React.Children.map(children, (child) => {
