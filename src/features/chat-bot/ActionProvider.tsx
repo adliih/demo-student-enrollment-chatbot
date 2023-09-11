@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { createChatBotMessage } from "react-chatbot-kit"
-import { botMessages, userMessages } from "./config"
+import { createChatBotMessage, createClientMessage } from "react-chatbot-kit"
+import { botMessages, userMessages, WidgetName } from "./config"
+import { OptionProps } from "./QuickReply"
+
+export interface Actions {
+  handleParsedMessage: (message: string) => void
+  sendAsClientReply: (message: string) => void
+}
 
 enum FormStep {
   INIT = "INIT",
@@ -10,7 +16,9 @@ enum FormStep {
   END = "END",
 }
 
-type MessageType = ReturnType<typeof createChatBotMessage>
+type MessageType =
+  | ReturnType<typeof createChatBotMessage>
+  | ReturnType<typeof createClientMessage>
 
 const REPLACE_INITIAL_MESSAGE_DELAY_SEC = 3
 const MILLIS_IN_SEC = 1000
@@ -39,7 +47,11 @@ const ActionProvider = ({ setState, children }: any) => {
     if (message !== userMessages.startSession) {
       return
     }
-    addMessage(createChatBotMessage(botMessages.pickSlot, {}))
+    addMessage(
+      createChatBotMessage(botMessages.pickSlot, {
+        widget: WidgetName.SlotPicker,
+      }),
+    )
     setFormStep(FormStep.CHOOSE_SLOT)
   }
 
@@ -57,7 +69,7 @@ const ActionProvider = ({ setState, children }: any) => {
     setFormStep(FormStep.END)
   }
 
-  const userReplied = (message: string) => {
+  const handleParsedMessage = (message: string) => {
     switch (formStep) {
       case FormStep.INIT:
         return handleInitResponse(message)
@@ -70,9 +82,30 @@ const ActionProvider = ({ setState, children }: any) => {
     }
   }
 
+  const sendAsClientReply = (message: string) => {
+    addMessage(createClientMessage(message, {}))
+    handleParsedMessage(message)
+  }
+
+  const actions: Actions = {
+    handleParsedMessage,
+    sendAsClientReply,
+  }
+
   useEffect(() => {
     const replaceMessageId = setTimeout(() => {
-      setMessages([createChatBotMessage(botMessages.welcome, {})])
+      setMessages([
+        createChatBotMessage(botMessages.welcome, {
+          widget: WidgetName.QuickReply,
+          payload: {
+            options: [
+              {
+                value: userMessages.startSession,
+              },
+            ] as OptionProps[],
+          },
+        }),
+      ])
     }, REPLACE_INITIAL_MESSAGE_DELAY_SEC * MILLIS_IN_SEC)
 
     return () => {
@@ -84,7 +117,7 @@ const ActionProvider = ({ setState, children }: any) => {
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
-          actions: { userReplied },
+          actions,
         })
       })}
     </div>

@@ -1,8 +1,14 @@
-import React from "react"
+import React, { ReactElement } from "react"
+import { Actions } from "./ActionProvider"
 
-const MessageParser = ({ children, actions }: any) => {
+interface Props {
+  children: ReactElement
+  actions: Actions
+}
+
+const MessageParser = ({ children, actions }: Props) => {
   const parse = (message: string) => {
-    actions.userReplied(message)
+    actions.handleParsedMessage(message)
   }
 
   return (
@@ -10,7 +16,7 @@ const MessageParser = ({ children, actions }: any) => {
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
           parse: parse,
-          actions: {},
+          actions,
         })
       })}
     </div>
