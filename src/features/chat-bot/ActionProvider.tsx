@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 import { createChatBotMessage, createClientMessage } from "react-chatbot-kit"
 import { botMessages, userMessages, WidgetName } from "./config"
+import { useAppDispatch } from "../../app/hooks"
+import {
+  ageSubmitted,
+  nameSubmitted,
+  slotChoosen,
+} from "../student-info/studentInfoSlice"
 
 export interface Actions {
   handleParsedMessage: (message: string) => void
@@ -21,6 +27,7 @@ type MessageType =
 
 const ActionProvider = ({ setState, children }: any) => {
   const [formStep, setFormStep] = useState(FormStep.INIT)
+  const dispatch = useAppDispatch()
 
   const addMessage = (message: MessageType) => {
     setState((prev: any) => ({
@@ -43,15 +50,18 @@ const ActionProvider = ({ setState, children }: any) => {
   }
 
   const handleSlotChoosen = (message: string) => {
+    dispatch(slotChoosen(message))
     addMessage(createChatBotMessage(botMessages.enterName, {}))
     setFormStep(FormStep.ENTER_NAME)
   }
   const handleNameEntered = (message: string) => {
+    dispatch(nameSubmitted(message))
     addMessage(createChatBotMessage(botMessages.enterAge, {}))
     setFormStep(FormStep.ENTER_AGE)
   }
 
   const handleAgeEntered = (message: string) => {
+    dispatch(ageSubmitted(parseInt(message)))
     addMessage(createChatBotMessage(botMessages.exit, {}))
     setFormStep(FormStep.END)
   }
