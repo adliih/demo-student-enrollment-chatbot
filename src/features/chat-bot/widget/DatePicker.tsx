@@ -1,7 +1,7 @@
 import React from "react"
 import { parse, subDays, addDays, format } from "date-fns"
-import { useAppSelector, useAppDispatch } from "../../app/hooks"
-import { dateChoosen } from "../student-info/studentInfoSlice"
+import { useAppSelector, useAppDispatch } from "../../../app/hooks"
+import { dateChoosen } from "../../student-info/studentInfoSlice"
 
 export default function DatePicker() {
   const DATE_FORMAT = "dd MMM, EEE"

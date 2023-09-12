@@ -1,7 +1,9 @@
 import IConfig from "react-chatbot-kit/build/src/interfaces/IConfig"
 import { createChatBotMessage } from "react-chatbot-kit"
-import SlotPicker from "./SlotPicker"
-import QuickReply, { OptionProps } from "./QuickReply"
+import SlotPicker from "./widget/SlotPicker"
+import QuickReply, { OptionProps } from "./widget/QuickReply"
+import InputText from "./widget/InputText"
+import InputNumberRange from "./widget/InputNumberRange"
 
 export const botMessages = {
   welcome: "Hello, Welcome to student info system!",
@@ -18,6 +20,8 @@ export const userMessages = {
 export enum WidgetName {
   SlotPicker = "SlotPicker",
   QuickReply = "QuickReply",
+  InputText = "InputText",
+  InputNumberRange = "InputNumberRange",
 }
 
 const config: IConfig = {
@@ -43,6 +47,18 @@ const config: IConfig = {
     {
       widgetName: WidgetName.QuickReply,
       widgetFunc: (props) => <QuickReply {...props} />,
+      props: {},
+      mapStateToProps: [],
+    },
+    {
+      widgetName: WidgetName.InputText,
+      widgetFunc: (props) => <InputText {...props} />,
+      props: {},
+      mapStateToProps: [],
+    },
+    {
+      widgetName: WidgetName.InputNumberRange,
+      widgetFunc: (props) => <InputNumberRange {...props} />,
       props: {},
       mapStateToProps: [],
     },

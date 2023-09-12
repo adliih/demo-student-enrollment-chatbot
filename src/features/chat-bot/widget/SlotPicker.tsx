@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { useAppSelector } from "../../app/hooks"
-import { Actions } from "./ActionProvider"
+import { useAppSelector } from "../../../app/hooks"
+import { Actions } from "../ActionProvider"
 import DatePicker from "./DatePicker"
 import TimePicker from "./TimePicker"
 
@@ -16,7 +16,7 @@ export default function SlotPicker({ actions }: Props) {
       return
     }
     actions.sendAsClientReply(`${date} ${time}`)
-  }, [date, time, actions])
+  }, [date, time])
   return (
     <>
       <DatePicker />

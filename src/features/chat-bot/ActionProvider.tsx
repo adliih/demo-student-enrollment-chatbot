@@ -48,12 +48,24 @@ const ActionProvider = ({ setState, children }: any) => {
   }
 
   const handleSlotChoosen = () => {
-    addMessage(createChatBotMessage(botMessages.enterName, {}))
+    addMessage(
+      createChatBotMessage(botMessages.enterName, {
+        widget: WidgetName.InputText,
+      }),
+    )
     setFormStep(FormStep.ENTER_NAME)
   }
   const handleNameEntered = (message: string) => {
     dispatch(nameSubmitted(message))
-    addMessage(createChatBotMessage(botMessages.enterAge, {}))
+    addMessage(
+      createChatBotMessage(botMessages.enterAge, {
+        widget: WidgetName.InputNumberRange,
+        payload: {
+          min: 18,
+          max: 40,
+        },
+      }),
+    )
     setFormStep(FormStep.ENTER_AGE)
   }
 
@@ -72,7 +84,7 @@ const ActionProvider = ({ setState, children }: any) => {
       case FormStep.INIT:
         return handleInitResponse(message)
       case FormStep.CHOOSE_SLOT:
-        return handleSlotChoosen(message)
+        return handleSlotChoosen()
       case FormStep.ENTER_NAME:
         return handleNameEntered(message)
       case FormStep.ENTER_AGE:

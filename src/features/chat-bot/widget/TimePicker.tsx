@@ -1,6 +1,6 @@
 import React from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { timeChoosen } from "../student-info/studentInfoSlice"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { timeChoosen } from "../../student-info/studentInfoSlice"
 
 interface TimeOptions {
   type: "Morning" | "Noon"

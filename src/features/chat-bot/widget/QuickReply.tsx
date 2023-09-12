@@ -1,5 +1,5 @@
 import React from "react"
-import { Actions } from "./ActionProvider"
+import { Actions } from "../ActionProvider"
 
 export interface OptionProps {
   value: string
