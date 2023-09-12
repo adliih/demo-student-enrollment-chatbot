@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { timeChoosen } from "../../student-info/studentInfoSlice"
 
@@ -36,24 +36,29 @@ const options: TimeOptions[] = [
 
 export default function TimePicker() {
   const date = useAppSelector((state) => state.studentInfo.slot.date)
+  const [selectedTime, setSelectedTime] = useState("")
   const dispatch = useAppDispatch()
   if (!date) {
     return <></>
   }
 
   const groupedOptions = options.reduce(
-    (result: Record<string, string[]>, option) => {
+    (
+      result: Record<string, { value: string; isSelected: boolean }[]>,
+      option,
+    ) => {
       const { type, value } = option
       if (!result[type]) {
         result[type] = []
       }
-      result[type].push(value)
+      result[type].push({ value, isSelected: selectedTime === value })
       return result
     },
     {},
   )
 
   const handleClick = (value: string) => {
+    setSelectedTime(value)
     dispatch(timeChoosen(value))
   }
 
@@ -63,9 +68,11 @@ export default function TimePicker() {
         <React.Fragment key={type}>
           <div>{type}</div>
           <div className="flex gap-3 overflow-x-scroll">
-            {values.map((value) => (
+            {values.map(({ isSelected, value }) => (
               <button
-                className="btn btn-sm"
+                className={
+                  "btn btn-sm " + (isSelected ? "text-secondary-focus" : "")
+                }
                 type="button"
                 key={value}
                 onClick={() => handleClick(value)}
