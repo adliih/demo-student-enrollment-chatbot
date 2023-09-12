@@ -2,11 +2,7 @@ import React, { useState } from "react"
 import { createChatBotMessage, createClientMessage } from "react-chatbot-kit"
 import { botMessages, userMessages, WidgetName } from "./config"
 import { useAppDispatch } from "../../app/hooks"
-import {
-  ageSubmitted,
-  nameSubmitted,
-  slotChoosen,
-} from "../student-info/studentInfoSlice"
+import { ageSubmitted, nameSubmitted } from "../student-info/studentInfoSlice"
 import { useNavigate } from "react-router-dom"
 
 export interface Actions {
@@ -51,8 +47,7 @@ const ActionProvider = ({ setState, children }: any) => {
     setFormStep(FormStep.CHOOSE_SLOT)
   }
 
-  const handleSlotChoosen = (message: string) => {
-    dispatch(slotChoosen(message))
+  const handleSlotChoosen = () => {
     addMessage(createChatBotMessage(botMessages.enterName, {}))
     setFormStep(FormStep.ENTER_NAME)
   }

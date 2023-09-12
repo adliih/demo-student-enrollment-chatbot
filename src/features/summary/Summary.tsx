@@ -2,11 +2,12 @@ import React from "react"
 import { useAppSelector } from "../../app/hooks"
 
 export default function Summary() {
-  const studentInfo = useAppSelector((state) => state.studentInfo)
+  const { slot, age, name } = useAppSelector((state) => state.studentInfo)
+  const { date, time } = slot
   return (
     <div>
-      Your name {studentInfo.name} aged {studentInfo.age} has been added to
-      student system at {studentInfo.slot}. You may now exit.
+      Your name {name} aged {age} has been added to student system at {date}{" "}
+      {time}. You may now exit.
     </div>
   )
 }
