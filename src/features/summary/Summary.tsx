@@ -12,10 +12,8 @@ export default function Summary() {
   const { date, time } = slot
 
   const handleExit = () => {
+    navigate("/")
     dispatch(reset())
-    setTimeout(() => {
-      navigate("/")
-    }, 300)
   }
   return (
     <div className="flex justify-center items-center h-screen">
