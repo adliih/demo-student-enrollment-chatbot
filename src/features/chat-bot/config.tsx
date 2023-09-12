@@ -1,10 +1,7 @@
 import IConfig from "react-chatbot-kit/build/src/interfaces/IConfig"
-import Loading from "./Loading"
-import { createCustomMessage } from "react-chatbot-kit"
-import UserChatMessage from "./UserChatMessage"
-import BotChatMessage from "./BotChatMessage"
+import { createChatBotMessage } from "react-chatbot-kit"
 import SlotPicker from "./SlotPicker"
-import QuickReply from "./QuickReply"
+import QuickReply, { OptionProps } from "./QuickReply"
 
 export const botMessages = {
   welcome: "Hello, Welcome to student info system!",
@@ -24,12 +21,18 @@ export enum WidgetName {
 }
 
 const config: IConfig = {
-  initialMessages: [createCustomMessage("", "loading", {})],
-  customComponents: {
-    userAvatar: (props) => <></>,
-    userChatMessage: (props) => <UserChatMessage {...props} />,
-    botChatMessage: (props) => <BotChatMessage {...props} />,
-  },
+  initialMessages: [
+    createChatBotMessage(botMessages.welcome, {
+      widget: WidgetName.QuickReply,
+      payload: {
+        options: [
+          {
+            value: userMessages.startSession,
+          },
+        ] as OptionProps[],
+      },
+    }),
+  ],
   widgets: [
     {
       widgetName: WidgetName.SlotPicker,
@@ -44,9 +47,6 @@ const config: IConfig = {
       mapStateToProps: [],
     },
   ],
-  customMessages: {
-    loading: (props) => <Loading {...props} />,
-  },
 }
 
 export default config

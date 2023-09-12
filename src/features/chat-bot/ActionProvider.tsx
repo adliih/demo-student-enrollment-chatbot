@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { createChatBotMessage, createClientMessage } from "react-chatbot-kit"
 import { botMessages, userMessages, WidgetName } from "./config"
-import { OptionProps } from "./QuickReply"
 
 export interface Actions {
   handleParsedMessage: (message: string) => void
@@ -20,9 +19,6 @@ type MessageType =
   | ReturnType<typeof createChatBotMessage>
   | ReturnType<typeof createClientMessage>
 
-const REPLACE_INITIAL_MESSAGE_DELAY_SEC = 3
-const MILLIS_IN_SEC = 1000
-
 const ActionProvider = ({ setState, children }: any) => {
   const [formStep, setFormStep] = useState(FormStep.INIT)
 
@@ -31,15 +27,6 @@ const ActionProvider = ({ setState, children }: any) => {
       ...prev,
       messages: [...prev.messages, message],
     }))
-  }
-
-  const setMessages = (messages: MessageType[]) => {
-    setState((prev: any) => {
-      return {
-        ...prev,
-        messages,
-      }
-    })
   }
 
   const handleInitResponse = (message: string) => {
@@ -91,27 +78,6 @@ const ActionProvider = ({ setState, children }: any) => {
     handleParsedMessage,
     sendAsClientReply,
   }
-
-  useEffect(() => {
-    const replaceMessageId = setTimeout(() => {
-      setMessages([
-        createChatBotMessage(botMessages.welcome, {
-          widget: WidgetName.QuickReply,
-          payload: {
-            options: [
-              {
-                value: userMessages.startSession,
-              },
-            ] as OptionProps[],
-          },
-        }),
-      ])
-    }, REPLACE_INITIAL_MESSAGE_DELAY_SEC * MILLIS_IN_SEC)
-
-    return () => {
-      clearTimeout(replaceMessageId)
-    }
-  }, [])
 
   return (
     <div>
