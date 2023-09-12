@@ -58,19 +58,22 @@ export default function TimePicker() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 py-2">
       {Object.entries(groupedOptions).map(([type, values]) => (
         <React.Fragment key={type}>
           <div>{type}</div>
-          {values.map((value) => (
-            <button
-              type="button"
-              key={value}
-              onClick={() => handleClick(value)}
-            >
-              {value}
-            </button>
-          ))}
+          <div className="flex gap-3 overflow-x-scroll">
+            {values.map((value) => (
+              <button
+                className="btn btn-sm"
+                type="button"
+                key={value}
+                onClick={() => handleClick(value)}
+              >
+                {value}
+              </button>
+            ))}
+          </div>
         </React.Fragment>
       ))}
     </div>

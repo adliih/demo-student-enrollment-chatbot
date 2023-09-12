@@ -24,9 +24,14 @@ export default function DatePicker() {
   }
 
   return (
-    <div>
+    <div className="flex gap-3 overflow-x-scroll">
       {formattedDateOptions.map((date) => (
-        <button key={date} type="button" onClick={() => handleClick(date)}>
+        <button
+          className="btn btn-sm"
+          key={date}
+          type="button"
+          onClick={() => handleClick(date)}
+        >
           {date}
         </button>
       ))}

@@ -30,7 +30,11 @@ function Option({
 }) {
   const { sendAsClientReply } = actions
   return (
-    <button type="button" onClick={() => sendAsClientReply(option.value)}>
+    <button
+      className="btn btn-sm"
+      type="button"
+      onClick={() => sendAsClientReply(option.value)}
+    >
       {option.value}
     </button>
   )

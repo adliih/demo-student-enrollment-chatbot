@@ -20,11 +20,12 @@ export default function InputText({ actions }: Props) {
       }}
     >
       <input
+        className="input input-bordered input-sm w-full max-w-xs"
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button type="submit">Submit</button>
+      <button type="submit"></button>
     </form>
   )
 }

@@ -7,7 +7,7 @@ import "./ChatScreen.css"
 
 export default function ChatScreen() {
   return (
-    <div>
+    <div className="flex justify-center items-center h-screen">
       <Chatbot
         config={config}
         messageParser={MessageParser}

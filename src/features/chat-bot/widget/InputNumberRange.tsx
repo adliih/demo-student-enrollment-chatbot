@@ -27,19 +27,23 @@ export default function InputNumberRange({ payload, actions }: Props) {
 
   return (
     <form
+      className="form-control"
       onSubmit={(e) => {
         e.preventDefault()
         handleSubmit()
       }}
     >
-      <input
-        type="number"
-        value={value}
-        min={min}
-        max={max}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-      <button type="submit">Submit</button>
+      <div>
+        <input
+          className="input input-bordered input-sm w-full max-w-xs"
+          type="number"
+          value={value}
+          min={min}
+          max={max}
+          onChange={(e) => handleChange(e.target.value)}
+        />
+        <button type="submit"></button>
+      </div>
     </form>
   )
 }
