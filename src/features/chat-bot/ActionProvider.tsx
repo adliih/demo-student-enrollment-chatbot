@@ -7,6 +7,7 @@ import {
   nameSubmitted,
   slotChoosen,
 } from "../student-info/studentInfoSlice"
+import { useNavigate } from "react-router-dom"
 
 export interface Actions {
   handleParsedMessage: (message: string) => void
@@ -28,6 +29,7 @@ type MessageType =
 const ActionProvider = ({ setState, children }: any) => {
   const [formStep, setFormStep] = useState(FormStep.INIT)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const addMessage = (message: MessageType) => {
     setState((prev: any) => ({
@@ -64,6 +66,10 @@ const ActionProvider = ({ setState, children }: any) => {
     dispatch(ageSubmitted(parseInt(message)))
     addMessage(createChatBotMessage(botMessages.exit, {}))
     setFormStep(FormStep.END)
+
+    setTimeout(() => {
+      navigate("/summary")
+    }, 5000)
   }
 
   const handleParsedMessage = (message: string) => {

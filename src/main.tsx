@@ -6,6 +6,7 @@ import App from "./App"
 import "./index.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ChatScreen from "./features/chat-bot/ChatScreen"
+import Summary from "./features/summary/Summary"
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "chat",
     element: <ChatScreen />,
+  },
+  {
+    path: "summary",
+    element: <Summary />,
   },
 ])
 
