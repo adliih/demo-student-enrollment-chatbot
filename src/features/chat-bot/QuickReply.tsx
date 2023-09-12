@@ -15,16 +15,10 @@ interface Props {
 export default function QuickReply({ payload, actions }: Props) {
   const { options } = payload
   const renderedOptions = options.map((option) => (
-    <li key={option.value}>
-      <Option actions={actions} option={option} />
-    </li>
+    <Option key={option.value} actions={actions} option={option} />
   ))
 
-  return (
-    <div>
-      <ul>{renderedOptions}</ul>
-    </div>
-  )
+  return <div>{renderedOptions}</div>
 }
 
 function Option({
